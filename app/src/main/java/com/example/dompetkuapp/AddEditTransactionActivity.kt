@@ -1,9 +1,8 @@
 package com.example.dompetkuapp
 
-import android.R
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dompetkuapp.database.DatabaseHelper
@@ -20,7 +19,7 @@ class AddEditTransactionActivity : AppCompatActivity() {
     private var transactionId: Int = -1
     private var isEditMode = false
 
-    private val categories = arrayOf("Makanan", "Transportasi", "Belanja", "Hiburan", "Tagihan", "Gaji", "Lainnya")
+    private var selectedCategory: String = "Makanan"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +29,7 @@ class AddEditTransactionActivity : AppCompatActivity() {
         dbHelper = DatabaseHelper(this)
 
         setupToolbar()
-        setupDropdown()
+        setupCategorySelection()
         setupDatePicker()
         setupQuickAddChips()
 
@@ -53,12 +52,13 @@ class AddEditTransactionActivity : AppCompatActivity() {
             }
 
             if (existingTransaction.category.isNotEmpty()) {
-                binding.actCategory.setText(existingTransaction.category, false)
+                selectCategory(existingTransaction.category)
             }
         } else {
             // Create mode: set today's date
             val currentDate = SimpleDateFormat("dd MMM yyyy", Locale("in", "ID")).format(Calendar.getInstance().time)
             binding.etDate.setText(currentDate)
+            selectCategory("Makanan")
         }
 
         binding.btnSave.setOnClickListener {
@@ -75,11 +75,67 @@ class AddEditTransactionActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_reset -> {
+                    resetForm()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
-    private fun setupDropdown() {
-        val adapter = ArrayAdapter(this, R.layout.simple_dropdown_item_1line, categories)
-        binding.actCategory.setAdapter(adapter)
+    private fun resetForm() {
+        binding.etTitle.setText("")
+        binding.etAmount.setText("")
+        binding.rbExpense.isChecked = true
+        selectCategory("Makanan")
+        val currentDate = SimpleDateFormat("dd MMM yyyy", Locale("in", "ID")).format(Calendar.getInstance().time)
+        binding.etDate.setText(currentDate)
+        Toast.makeText(this, "Formulir direset", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setupCategorySelection() {
+        val categoryMap = mapOf(
+            "Makanan" to binding.cardMakanan,
+            "Transportasi" to binding.cardTransportasi,
+            "Belanja" to binding.cardBelanja,
+            "Hiburan" to binding.cardHiburan,
+            "Tagihan" to binding.cardTagihan,
+            "Lainnya" to binding.cardLainnya
+        )
+
+        for ((catName, cardView) in categoryMap) {
+            cardView.setOnClickListener {
+                selectCategory(catName)
+            }
+        }
+    }
+
+    private fun selectCategory(category: String) {
+        selectedCategory = category
+        val categoryMap = mapOf(
+            "Makanan" to binding.cardMakanan,
+            "Transportasi" to binding.cardTransportasi,
+            "Belanja" to binding.cardBelanja,
+            "Hiburan" to binding.cardHiburan,
+            "Tagihan" to binding.cardTagihan,
+            "Lainnya" to binding.cardLainnya
+        )
+
+        for ((catName, card) in categoryMap) {
+            val isSelected = (catName == category)
+            if (isSelected) {
+                card.strokeWidth = 2 * resources.displayMetrics.density.toInt()
+                card.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+                card.strokeColor = Color.parseColor("#3B82F6")
+            } else {
+                card.strokeWidth = 1 * resources.displayMetrics.density.toInt()
+                card.setCardBackgroundColor(Color.parseColor("#F8FAFC"))
+                card.strokeColor = Color.parseColor("#E2E8F0")
+            }
+        }
     }
 
     private fun setupDatePicker() {
@@ -117,33 +173,27 @@ class AddEditTransactionActivity : AppCompatActivity() {
         val title = binding.etTitle.text.toString().trim()
         val amountStr = binding.etAmount.text.toString().trim()
         val date = binding.etDate.text.toString().trim()
-        val category = binding.actCategory.text.toString().trim()
-        if (category.isEmpty()) {
-            binding.tilCategory.error = "Kategori tidak boleh kosong"
-            return
-        } else {
-            binding.tilCategory.error = null
-        }
+        val category = selectedCategory
         val type = if (binding.rbIncome.isChecked) "PEMASUKAN" else "PENGELUARAN"
 
         if (title.isEmpty()) {
-            binding.tilTitle.error = "Judul tidak boleh kosong"
+            binding.etTitle.error = "Judul tidak boleh kosong"
             return
         } else {
-            binding.tilTitle.error = null
+            binding.etTitle.error = null
         }
 
         if (amountStr.isEmpty()) {
-            binding.tilAmount.error = "Nominal tidak boleh kosong"
+            binding.etAmount.error = "Nominal tidak boleh kosong"
             return
         }
 
         val amount = amountStr.toDoubleOrNull()
         if (amount == null || amount <= 0.0) {
-            binding.tilAmount.error = "Nominal harus lebih besar dari 0"
+            binding.etAmount.error = "Nominal harus lebih besar dari 0"
             return
         } else {
-            binding.tilAmount.error = null
+            binding.etAmount.error = null
         }
 
         val transaction = TransactionModel(

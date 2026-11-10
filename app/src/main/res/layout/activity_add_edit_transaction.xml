@@ -16,6 +16,7 @@
         app:navigationIcon="@drawable/ic_back"
         app:title="Tambah Transaksi"
         app:titleTextColor="@color/text_dark"
+        app:menu="@menu/menu_add_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,12 +36,12 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Segmented Toggle for Type (Pengeluaran vs Pemasukan) -->
+            <!-- 1. Segmented Pill Toggle Container -->
             <RadioGroup
                 android:id="@+id/rgType"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:background="@drawable/bg_spinner"
+                android:background="@drawable/bg_pill_container"
                 android:orientation="horizontal"
                 android:padding="4dp"
                 android:weightSum="2">
@@ -50,15 +51,15 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/selector_radio_expense"
+                    android:background="@drawable/bg_toggle_expense"
                     android:button="@null"
                     android:checked="true"
-                    android:drawableStart="@drawable/ic_expense_down"
+                    android:drawableStart="@drawable/ic_pengeluaran_down"
                     android:drawablePadding="8dp"
                     android:gravity="center"
-                    android:paddingHorizontal="12dp"
+                    android:paddingHorizontal="16dp"
                     android:text="Pengeluaran"
-                    android:textColor="@color/expense_text_color"
+                    android:textColor="@color/toggle_text_expense"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -67,19 +68,193 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/selector_radio_income"
+                    android:background="@drawable/bg_toggle_income"
                     android:button="@null"
-                    android:drawableStart="@drawable/ic_income_up"
+                    android:drawableStart="@drawable/ic_pemasukan_up"
                     android:drawablePadding="8dp"
                     android:gravity="center"
-                    android:paddingHorizontal="12dp"
+                    android:paddingHorizontal="16dp"
                     android:text="Pemasukan"
-                    android:textColor="@color/income_text_color"
+                    android:textColor="@color/toggle_text_income"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </RadioGroup>
 
-            <!-- NOMINAL TRANSAKSI Card Container -->
+            <!-- 2. CARD 1: NOMINAL TRANSAKSI -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Top Row: Icon + Label + IDR Badge -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_wallet" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:text="NOMINAL TRANSAKSI *"
+                            android:textColor="#334155"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="IDR"
+                            android:textColor="#991B1B"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Main Input Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Rp"
+                            android:textColor="#0F172A"
+                            android:textSize="28sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/etAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:background="@null"
+                            android:hint="0"
+                            android:inputType="numberDecimal"
+                            android:textColor="#0F172A"
+                            android:textColorHint="#94A3B8"
+                            android:textSize="34sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#F1F5F9" />
+
+                    <!-- Bottom Row: Cepat + Chips -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="Cepat:"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scrollbars="none">
+
+                            <com.google.android.material.chip.ChipGroup
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:singleLine="true">
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip10k"
+                                    style="@style/Widget.MaterialComponents.Chip.Action"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="+10rb"
+                                    android:textColor="#1D4ED8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    app:chipBackgroundColor="#EFF6FF"
+                                    app:chipCornerRadius="16dp"
+                                    app:chipStrokeColor="#DBEAFE"
+                                    app:chipStrokeWidth="1dp" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip50k"
+                                    style="@style/Widget.MaterialComponents.Chip.Action"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="+50rb"
+                                    android:textColor="#1D4ED8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    app:chipBackgroundColor="#EFF6FF"
+                                    app:chipCornerRadius="16dp"
+                                    app:chipStrokeColor="#DBEAFE"
+                                    app:chipStrokeWidth="1dp" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip100k"
+                                    style="@style/Widget.MaterialComponents.Chip.Action"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="+100rb"
+                                    android:textColor="#1D4ED8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    app:chipBackgroundColor="#EFF6FF"
+                                    app:chipCornerRadius="16dp"
+                                    app:chipStrokeColor="#DBEAFE"
+                                    app:chipStrokeWidth="1dp" />
+
+                                <com.google.android.material.chip.Chip
+                                    android:id="@+id/chip500k"
+                                    style="@style/Widget.MaterialComponents.Chip.Action"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="+500rb"
+                                    android:textColor="#1D4ED8"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    app:chipBackgroundColor="#EFF6FF"
+                                    app:chipCornerRadius="16dp"
+                                    app:chipStrokeColor="#DBEAFE"
+                                    app:chipStrokeWidth="1dp" />
+
+                            </com.google.android.material.chip.ChipGroup>
+                        </HorizontalScrollView>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 3. CARD 2: JUDUL TRANSAKSI -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,168 +274,311 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:letterSpacing="0.05"
-                        android:text="NOMINAL TRANSAKSI"
-                        android:textColor="@color/primary_indigo"
-                        android:textSize="11sp"
+                        android:text="Judul Transaksi *"
+                        android:textColor="#475569"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
-                    <!-- Outlined TextInputLayout for Nominal (Rp) -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilAmount"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:hint="0"
-                        app:boxCornerRadiusBottomEnd="14dp"
-                        app:boxCornerRadiusBottomStart="14dp"
-                        app:boxCornerRadiusTopEnd="14dp"
-                        app:boxCornerRadiusTopStart="14dp"
-                        app:boxStrokeColor="#4338CA"
-                        app:boxStrokeWidthFocused="2dp"
-                        app:prefixText="Rp "
-                        app:prefixTextAppearance="?attr/textAppearanceSubtitle1"
-                        app:prefixTextColor="@color/primary_indigo">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etAmount"
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_edit"
+                            app:tint="#64748B" />
+
+                        <EditText
+                            android:id="@+id/etTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"
-                            android:textColor="@color/text_dark"
-                            android:textColorHint="@color/text_secondary"
-                            android:textSize="28sp"
+                            android:layout_marginStart="8dp"
+                            android:background="@null"
+                            android:hint="Contoh: Beli Makan Siang &amp; Kopi"
+                            android:inputType="textCapSentences"
+                            android:textColor="#0F172A"
+                            android:textColorHint="#94A3B8"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Quick Add Chips -->
-                    <HorizontalScrollView
+            <!-- 4. CARD 3: PILIH KATEGORI (GRID CARDS) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pilih Kategori *"
+                            android:textColor="#334155"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kelola"
+                            android:textColor="#2563EB"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- 3x2 Grid of Categories (using GridLayout) -->
+                    <GridLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:scrollbars="none">
+                        android:columnCount="3"
+                        android:rowCount="2">
 
-                        <com.google.android.material.chip.ChipGroup
-                            android:id="@+id/chipGroup"
-                            android:layout_width="wrap_content"
+                        <!-- 1. Makanan -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardMakanan"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:singleLine="true">
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#3B82F6"
+                            app:strokeWidth="2dp">
 
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chip10k"
-                                style="@style/Widget.MaterialComponents.Chip.Action"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="+10rb"
-                                android:textColor="#334155"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:chipBackgroundColor="#F1F5F9"
-                                app:chipCornerRadius="12dp"
-                                app:chipStrokeColor="#E2E8F0"
-                                app:chipStrokeWidth="1dp" />
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="12dp">
 
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chip50k"
-                                style="@style/Widget.MaterialComponents.Chip.Action"
-                                android:layout_width="wrap_content"
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_food" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="Makanan"
+                                    android:textColor="#1E3A8A"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- 2. Transportasi -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardTransportasi"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="+50rb"
-                                android:textColor="#334155"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:chipBackgroundColor="#F1F5F9"
-                                app:chipCornerRadius="12dp"
-                                app:chipStrokeColor="#E2E8F0"
-                                app:chipStrokeWidth="1dp" />
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="12dp">
 
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chip100k"
-                                style="@style/Widget.MaterialComponents.Chip.Action"
-                                android:layout_width="wrap_content"
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_transport" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="Transport"
+                                    android:textColor="#475569"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- 3. Belanja -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardBelanja"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="+100rb"
-                                android:textColor="#334155"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:chipBackgroundColor="#F1F5F9"
-                                app:chipCornerRadius="12dp"
-                                app:chipStrokeColor="#E2E8F0"
-                                app:chipStrokeWidth="1dp" />
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="12dp">
 
-                            <com.google.android.material.chip.Chip
-                                android:id="@+id/chip500k"
-                                style="@style/Widget.MaterialComponents.Chip.Action"
-                                android:layout_width="wrap_content"
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_shopping" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="Belanja"
+                                    android:textColor="#475569"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- 4. Hiburan -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardHiburan"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="+500rb"
-                                android:textColor="#334155"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                app:chipBackgroundColor="#F1F5F9"
-                                app:chipCornerRadius="12dp"
-                                app:chipStrokeColor="#E2E8F0"
-                                app:chipStrokeWidth="1dp" />
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="12dp">
 
-                        </com.google.android.material.chip.ChipGroup>
-                    </HorizontalScrollView>
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_entertainment" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="Hiburan"
+                                    android:textColor="#475569"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- 5. Tagihan -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardTagihan"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="12dp">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_bill" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="Tagihan"
+                                    android:textColor="#475569"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- 6. Lainnya -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardLainnya"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="4dp"
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="12dp">
+
+                                <ImageView
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_more" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:text="Lainnya"
+                                    android:textColor="#475569"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </GridLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Outlined TextInputLayout for Judul Transaksi -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilTitle"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Judul Transaksi"
-                app:boxCornerRadiusBottomEnd="14dp"
-                app:boxCornerRadiusBottomStart="14dp"
-                app:boxCornerRadiusTopEnd="14dp"
-                app:boxCornerRadiusTopStart="14dp"
-                app:boxStrokeColor="#4338CA"
-                app:boxStrokeWidthFocused="2dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:textColor="@color/text_dark"
-                    android:textColorHint="@color/text_secondary"
-                    android:textSize="16sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Category Exposed Dropdown Menu -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilCategory"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Pilih Kategori"
-                app:boxCornerRadiusBottomEnd="14dp"
-                app:boxCornerRadiusBottomStart="14dp"
-                app:boxCornerRadiusTopEnd="14dp"
-                app:boxCornerRadiusTopStart="14dp"
-                app:boxStrokeColor="#4338CA"
-                app:hintTextColor="#4338CA">
-
-                <AutoCompleteTextView
-                    android:id="@+id/actCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:paddingVertical="14dp"
-                    android:textColor="#0F172A"
-                    android:textSize="15sp" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Date Picker Field -->
+            <!-- 5. Date Picker Field -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilDate"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -268,15 +586,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Tanggal"
-                app:boxCornerRadiusBottomEnd="14dp"
-                app:boxCornerRadiusBottomStart="14dp"
-                app:boxCornerRadiusTopEnd="14dp"
-                app:boxCornerRadiusTopStart="14dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
                 app:boxStrokeColor="#4338CA"
-                app:boxStrokeWidthFocused="2dp"
                 app:endIconDrawable="@drawable/ic_calendar"
                 app:endIconMode="custom"
-                app:endIconTint="@color/primary_indigo">
+                app:endIconTint="#4338CA">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDate"
@@ -286,11 +603,10 @@
                     android:focusable="false"
                     android:inputType="none"
                     android:textColor="@color/text_dark"
-                    android:textColorHint="@color/text_secondary"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Buttons -->
+            <!-- 6. Bottom Actions -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
@@ -299,9 +615,12 @@
                 android:text="Simpan Transaksi"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="@color/primary_indigo"
-                app:cornerRadius="16dp"
-                app:elevation="2dp" />
+                app:backgroundTint="#1E293B"
+                app:cornerRadius="24dp"
+                app:elevation="0dp"
+                app:icon="@drawable/ic_check_circle"
+                app:iconGravity="textStart"
+                app:iconTint="@android:color/white" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancel"
@@ -310,7 +629,7 @@
                 android:layout_height="54dp"
                 android:layout_marginTop="8dp"
                 android:text="Batal"
-                android:textColor="@color/text_secondary"
+                android:textColor="#475569"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
