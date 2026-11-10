@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light"
+    tools:context=".MainActivity">
+
+    <!-- Top Header Bar with Avatar/Icon Badge -->
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvHeaderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DompetKu"
+                android:textColor="@color/text_dark"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Kelola keuanganmu"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Circular Avatar/Icon Badge -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            app:cardBackgroundColor="@color/primary_indigo"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:contentDescription="Profile"
+                android:src="@drawable/ic_add_white"
+                app:tint="@android:color/white" />
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <!-- Top Balance Card (Dark Navy #1E2238, cornerRadius 24dp) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardBalance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        app:cardBackgroundColor="@color/primary_navy_card"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="6dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Saldo Akun"
+                android:textColor="#94A3B8"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvNetBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Rp 0"
+                android:textColor="@android:color/white"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <!-- Sub-card Pill Containers side by side (#282D4A, radius 16dp) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <!-- Income Pill Container -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_pill_income"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginEnd="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="4dp"
+                            android:src="@drawable/ic_income_up" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pemasukan"
+                            android:textColor="#94A3B8"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvTotalIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="+ Rp 0"
+                        android:textColor="@color/income_green"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Expense Pill Container -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_pill_expense"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginStart="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="4dp"
+                            android:src="@drawable/ic_expense_down" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pengeluaran"
+                            android:textColor="#94A3B8"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvTotalExpense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="- Rp 0"
+                        android:textColor="@color/expense_red"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Horizontal ScrollView containing category filter Chips -->
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardBalance">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipAll"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Semua" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipFood"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Makanan" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTransport"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transportasi" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSalary"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gaji" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipShopping"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Belanja" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <!-- Section Header: Riwayat Transaksi -->
+    <TextView
+        android:id="@+id/tvSectionHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="Riwayat Transaksi"
+        android:textColor="@color/text_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalScrollView" />
+
+    <!-- RecyclerView for transaction items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTransactions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSectionHeader"
+        tools:listitem="@layout/item_transaction" />
+
+    <!-- Empty state TextView / Container -->
+    <LinearLayout
+        android:id="@+id/tvEmptyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontalScrollView">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:alpha="0.4"
+            android:src="@drawable/ic_calendar"
+            app:tint="@color/text_secondary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Belum ada catatan transaksi"
+            android:textColor="@color/text_secondary"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- FloatingActionButton at bottom-right -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:contentDescription="Tambah Transaksi"
+        android:src="@drawable/ic_add_white"
+        app:backgroundTint="@color/primary_indigo"
+        app:elevation="6dp"
+        app:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bg_light">#F8FAFC</color>
+    <color name="primary_navy_card">#1E2238</color>
+    <color name="sub_card_bg">#282D4A</color>
+    <color name="primary_indigo">#4338CA</color>
+    <color name="income_green">#059669</color>
+    <color name="expense_red">#E11D48</color>
+    <color name="text_dark">#0F172A</color>
+    <color name="text_secondary">#64748B</color>
+    <color name="card_stroke">#E2E8F0</color>
+</resources>
